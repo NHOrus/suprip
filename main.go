@@ -8,6 +8,30 @@ import (
 )
 
 func main() {
+	riptext()
+}
+
+func riptext() {
+	file, err := os.Open("test/page.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	text, err := gq.NewDocumentFromReader(file)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	ArtistName := "Artemis"
+	text.Find(".postContainer").Each(func(i int, s *gq.Selection) {
+		if s.Find(".desktop .name").Text() != ArtistName {
+			return
+		}
+		fmt.Println(s.Text())
+	})
+}
+
+func riplinks() {
 	checklink := regexp.MustCompile(`archive/[[:digit:]]`)
 	file, err := os.Open("test/listing.html")
 	if err != nil {
@@ -15,6 +39,7 @@ func main() {
 		return
 	}
 	listing, err := gq.NewDocumentFromReader(file)
+	//listing, err := gq.NewDocument("http://suptg.thisisnotatrueending.com/archive.html?tags=eclipsed+moon")
 	if err != nil {
 		fmt.Println(err)
 		return
