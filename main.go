@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-	riptext()
+	riptext("Artemis")
 }
 
-func riptext() {
+func riptext(ArtistName string) {
 	file, err := os.Open("test/page.html")
 	if err != nil {
 		fmt.Println(err)
@@ -22,12 +22,11 @@ func riptext() {
 		fmt.Println(err)
 		return
 	}
-	ArtistName := "Artemis"
 	text.Find(".postContainer").Each(func(i int, s *gq.Selection) {
 		if s.Find(".desktop .name").Text() != ArtistName {
 			return
 		}
-		fmt.Println(s.Text())
+		fmt.Println(s.Find(".postMessage").Text())
 	})
 }
 
